@@ -1,0 +1,63 @@
+#!/bin/bash
+
+### Validamos el ingreso de parámetros ###
+if [ "$1" == "" ]; then
+	echo "No ingresó ningún parámetro"
+	exit
+else
+	if [ "$1" ==  "-d" ]; then
+		parametro_optativo=$1
+		FILENAME=$2
+	else
+		FILENAME=$1
+	fi
+fi
+export FILENAME
+
+### Menú ###
+echo -e "Seleccione una de las opciones del menú\n"
+salir_del_menu="false"
+
+while [ salir_del_menu != "true" ]
+do
+    echo "----------   MENU   ----------"
+    echo "
+	    (1) Crear entorno
+	    (2) Correr proceso
+	    (3) Mostrar el listado de alumnos ordenados por numero de padron
+	    (4) Mostrar las 10 notas mas altas del listado de alumnos
+	    (5) Mostrar datos del alumno por numero de padron
+	    (6) Salir
+    "
+    read opcion
+    
+    case $opcion in
+    
+    1) ### Opción 1 ###
+        echo "Creando entorno..."
+        mkdir ~/EPNro1
+        cd ~/EPNro1
+        mkdir entrada
+        mkdir salida
+        mkdir procesado
+        if [ -d ~/EPNro1 ]; then
+            echo "Entorno creado con éxito!"
+        else
+            echo "Error al crear el entorno"
+            exit
+        fi
+    ;;
+    
+    2) ### Opción 2 ###
+        
+    3) ### Opción 3 ###
+        
+    4) ### Opción 4 ###
+        
+    5) ### Opción 5 ###
+        
+    6) ### Opción 6 ###
+        salir_del_menu="true"
+    ;;
+done
+exit
