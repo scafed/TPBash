@@ -1,16 +1,17 @@
 #!/bin/bash
 
 ### Validamos el ingreso de parámetros ###
-if [ "$1" == "" ]; then
-	echo "No ingresó ningún parámetro"
-	exit
+if [ "$1" == "-d" ]; then
+	parametro_optativo=$1
+	
+    if [ -z "$2" ]; then #Con -z se verifica si el string está vacío y con -n si no está vacío
+        echo "Debe ingresar el nombre del archivo despues del parámetro -d"
+        exit
+    fi
+
+    FILENAME=$2
 else
-	if [ "$1" ==  "-d" ]; then
-		parametro_optativo=$1
-		FILENAME=$2
-	else
-		FILENAME=$1
-	fi
+	FILENAME=$1
 fi
 export FILENAME
 
@@ -18,7 +19,7 @@ export FILENAME
 echo -e "Seleccione una de las opciones del menú\n"
 salir_del_menu="false"
 
-while [ salir_del_menu != "true" ]
+while [ "$salir_del_menu" != "true" ]
 do
     echo "----------   MENU   ----------"
     echo "
