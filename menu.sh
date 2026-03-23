@@ -61,7 +61,39 @@ do
     
     ### Opción 2 ###
     2)
+        # Si existe el archivo consolidar.sh se le da permisos y se ejecuta en background.
+        if [ -f ~/EPNro1/consolidar.sh ]; then
+            chmod +x ~/EPNro1/consolidar.sh #Con chmod +x se le da permisos de ejecución al archivo consolidar.sh
+            echo "Ejecutando el proceso..."
+            ~/EPNro1/consolidar.sh & #Con & se ejecuta el script en segundo plano (background).
+        
+        else
+            # Se crea el archivo consolidar.sh con su código, luego se le da permisos y se ejecuta en background.
+            # Se usa << para decirle que todo el bloque de texto que sigue hasta encontrar "EOF", sea entrada para el comando cat, y luego esa salida del cat se guarde en el archivo consolidar.sh
+            
+            cat << 'fin_del_script_consolidar' > ~/EPNro1/consolidar.sh
+#!/bin/bash
 
+ejecutar_script="true"
+while [ "$ejecutar_script" == "true" ];
+do
+    for archivo_en_entrada in ~/EPNro1/entrada/*.txt;
+    do
+        if [ -f "$archivo_en_entrada" ]; then
+            echo "Procesando el archivo $archivo_en_entrada"
+            cat "$archivo_en_entrada" >> ~/EPNro1/salida/"$FILENAME.txt"
+            mv "$archivo_en_entrada" ~/EPNro1/procesado/
+        fi
+    done
+
+    sleep 5 #Con sleep 5 se hace una pausa de 5 segundos.
+done
+fin_del_script_consolidar
+        
+            chmod +x ~/EPNro1/consolidar.sh
+            echo "Ejecutando el proceso..."
+            ~/EPNro1/consolidar.sh &
+        fi
     ;;
 
     ### Opción 3 ###  
