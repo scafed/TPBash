@@ -28,6 +28,18 @@ fi
 export FILENAME
 
 
+### Si se corre el proceso con el parámetro optativo -d, se matará el proceso de consolidar.sh en background y se borrará todo el entorno creado en ~/EPNro1/ ###
+if [ "$parametro_optativo" == "-d" ]; then
+    echo "Eliminando entorno y cerrando procesos en background..."
+    
+    pkill -f consolidar.sh #Con pkill mata los procesos que coincidan con el nombre, y con -f se busca en el comando completo, no solo en el nombre del proceso.
+    rm -rf ~/EPNro1/ #Con -r (recursivo) se borra el directorio y todo su contenido, y con -f es para que no pida confirmación.
+    
+    echo -e "Entorno eliminado y procesos en background cerrados con éxito!\n"
+    exit
+fi
+
+
 ### Menú ###
 
 echo -e "Seleccione una de las opciones del menú\n"
@@ -69,7 +81,7 @@ do
         
         else
             # Se crea el archivo consolidar.sh con su código, luego se le da permisos y se ejecuta en background.
-            # Se usa << para decirle que todo el bloque de texto que sigue hasta encontrar "EOF", sea entrada para el comando cat, y luego esa salida del cat se guarde en el archivo consolidar.sh
+            # Se usa << para decirle que todo el bloque de texto que sigue hasta encontrar "fin_del_script_consolidar", sea entrada para el comando cat, y luego esa salida del cat se guarde en el archivo consolidar.sh
             
             cat << 'fin_del_script_consolidar' > ~/EPNro1/consolidar.sh
 #!/bin/bash
